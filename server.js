@@ -1,10 +1,11 @@
 const express = require('express');
+const dotenv = require('dotenv')
 const cors = require('cors');
 const products = require('./routes/products.routes');
 const errorHandler = require('./middleware/error.middleware');
 
 const app = express();
-const port = 3000;
+
 // CORS configurations
 // const whitelist = ['http://localhost:3000', 'http://localhost'];
 // const options = {
@@ -16,6 +17,10 @@ const port = 3000;
 //     }
 //   },
 // };
+
+// ------------------------------------ ENV CONFIG ---------------------------------------- // 
+// Load en variables
+dotenv.config({ path: './.env'})
 
 // ---------------------------------- MIDDLEWARE ------------------------------------ //
 // Handle middleware
@@ -32,6 +37,9 @@ app.use('/api/v1/products', products);
 // Handle error routes middleware
 app.use(errorHandler);
 
-app.listen(port, () => {
-  console.log(`Servidor corriendo en: http://localhost:${port}`);
+// ------------------------------------ SERVER ---------------------------------------- // 
+const PORT = process.env.PORT || 3000;
+
+app.listen(PORT, () => {
+  console.log(`Servidor corriendo en: http://localhost:${PORT}`);
 });

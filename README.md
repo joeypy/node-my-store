@@ -17,8 +17,12 @@ yarn dev
 To start the database in postgres, first, duplicate the file .env.dev and rename it to .env, next set the environment variables and then run the next command line:
 
 ```bash
+# Run all the services
 docker-compose --env-file .env up
+# Run postgres services
 docker-compose --env-file .env up -d postgres
+# Run pgadmin services
+docker-compose --env-file .env up -d pgadmin
 ```
 
 To connect to the database by terminar in docker, we can use the following command:
