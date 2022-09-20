@@ -2,12 +2,12 @@
   "name": "my-store",
   "version": "1.0.0",
   "description": "Store online with node",
-  "main": "index.js",
+  "main": "server.js",
   "author": "Joseph Boscan",
   "license": "MIT",
   "scripts": {
-    "dev": "nodemon index.js",
-    "start": "node index.js",
+    "dev": "nodemon server.js",
+    "start": "node server.js",
     "lint": "eslint"
   },
   "devDependencies": {
@@ -19,6 +19,8 @@
     "prettier": "^2.3.2"
   },
   "dependencies": {
-    "express": "^4.18.1"
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "joi": "^17.6.0"
   }
 }

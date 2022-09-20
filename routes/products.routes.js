@@ -6,6 +6,12 @@ const {
   patchProduct,
   deleteProduct,
 } = require('../controllers/products');
+const validatorHandler = require('../middleware/validator.middleware');
+const {
+  getProductSchema,
+  createProductSchema,
+  updateProductSchema,
+} = require('../models/products.schema');
 
 const router = express.Router();
 
@@ -13,12 +19,16 @@ const router = express.Router();
 router
   .route('/')
   .get(getAllProducts)
-  .post(postProduct);
+  .post(validatorHandler(createProductSchema, 'body'), postProduct);
 
 router
   .route('/:id')
-  .get(getProduct)
-  .patch(patchProduct)
-  .delete(deleteProduct);
+  .get(validatorHandler(getProductSchema, 'params'), getProduct)
+  .patch(
+    validatorHandler(getProductSchema, 'params'),
+    validatorHandler(updateProductSchema, 'body'),
+    patchProduct
+  )
+  .delete(validatorHandler(getProductSchema, 'params'), deleteProduct);
 
 module.exports = router;
