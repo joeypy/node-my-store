@@ -14,6 +14,13 @@ yarn start    # or
 yarn dev
 ```
 
+To start the database in postgres, first, duplicate the file .env.dev and rename it to .env, next set the environment variables and then run the next command line:
+
+```bash
+docker-compose --env-file .env up
+docker-compose --env-file .env up -d postgres
+```
+
 ## Features
 
 - Serializers for routes
