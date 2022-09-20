@@ -1,10 +1,17 @@
-# Store made it in Node.js
+# My Store with Node.js
 
-To run the DEV server, uses:
+To install dependencies, uses:
 
 ```bash
 yarn          # or 
 yarn install
+```
+
+To run the DEV server, uses:
+
+```bash
+yarn start    # or 
+yarn dev
 ```
 
 ## Features
