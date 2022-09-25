@@ -1,9 +1,10 @@
 const express = require('express');
-const dotenv = require('dotenv')
+const dotenv = require('dotenv');
 const cors = require('cors');
 const products = require('./routes/products.routes');
 const users = require('./routes/users.routes');
 const errorHandler = require('./middleware/error.middleware');
+const sequelize = require('./libs/sequelize');
 
 const app = express();
 
@@ -19,9 +20,9 @@ const app = express();
 //   },
 // };
 
-// ------------------------------------ ENV CONFIG ---------------------------------------- // 
+// ------------------------------------ ENV CONFIG ---------------------------------------- //
 // Load en variables
-dotenv.config({ path: './.env'})
+dotenv.config();
 
 // ---------------------------------- MIDDLEWARE ------------------------------------ //
 // Handle middleware
@@ -39,9 +40,15 @@ app.use('/api/v1/users', users);
 // Handle error routes middleware
 app.use(errorHandler);
 
-// ------------------------------------ SERVER ---------------------------------------- // 
-const PORT = process.env.PORT || 3000;
+// ------------------------------------ SERVER ---------------------------------------- //
+const PORT = process.env.PORT;
 
-app.listen(PORT, () => {
+app.listen(PORT, async () => {
+  try {
+    await sequelize.authenticate();
+    console.log('Connection has been established successfully.');
+  } catch (err) {
+    console.error('Unable to connect to the database:', err);
+  }
   console.log(`Servidor corriendo en: http://localhost:${PORT}`);
 });

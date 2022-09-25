@@ -1,39 +1,57 @@
-const getConnection = require('../libs/postgres');
-const User = require('../services/users');
+const User = require('../services/users.service');
 
 // @desc        Get all users
 // @route       GET /api/v1/bootcamps/:id
 // @access      Public
-exports.getAllUsers = async (req, res) => {
-  const client = await getConnection();
-  const rta = await client.query('SELECT * FROM users');
+exports.getAllUsers = async (req, res, next) => {
+  let resp;
+
+  try {
+    resp = await User.findAll();
+  } catch (err) {
+    next(err);
+    return
+  }
 
   res.status(200).json({
     success: true,
-    count: rta.rowCount,
-    data: rta.rows,
+    count: resp.length,
+    data: resp,
   });
 };
 
-// exports.getUser = (req, res) => {
-//   const { id } = req.params;
-//   const user = service.findOne(id);
+exports.getUser = async (req, res, netx) => {
+  const { id } = req.params;
+  let resp;
 
-//   res.status(200).json({
-//     success: true,
-//     data: user,
-//   });
-// };
+  try {
+    resp = await User.findOne(id);
+  } catch (err) {
+    next(err);
+    return
+  }
 
-exports.postUser = (req, res) => {
-  const { name, email } = req.body;
+  res.status(200).json({
+    success: true,
+    data: resp,
+  });
+};
 
-  const user = new User();
-  user.create(name, email);
+exports.postUser = async (req, res, next) => {
+  const { email, password } = req.body;
+  let resp;
+
+  try {
+    resp = await User.create({ email, password }, next);
+  } catch (err) {
+    console.log(err)
+    next(err);
+    return;
+  }
 
   res.status(201).json({
     success: true,
-    data: { name, email },
+    data: resp,
   });
 };
 

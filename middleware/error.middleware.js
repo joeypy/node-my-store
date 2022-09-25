@@ -7,8 +7,13 @@ const errorHandler = (err, req, res, next) => {
   // Log to console or dev
   console.log('Error middleware', err);
 
-  if (err.details !== undefined) {
+  if (error.details !== undefined) {
     const message = Object.values(err.details).map((val) => val.message);
+    error = new ErrorResponse(message, 400);
+  }
+
+  if (error.message !== undefined) {
+    const message = Object.values(err.errors).map((val) => val.message);
     error = new ErrorResponse(message, 400);
   }
 

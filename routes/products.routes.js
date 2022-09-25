@@ -11,7 +11,7 @@ const {
   getProductSchema,
   createProductSchema,
   updateProductSchema,
-} = require('../models/products.schema');
+} = require('../schemas/products.schema');
 
 const router = express.Router();
 
