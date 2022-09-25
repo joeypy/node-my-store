@@ -10,7 +10,7 @@ exports.getAllUsers = async (req, res, next) => {
     resp = await User.findAll();
   } catch (err) {
     next(err);
-    return
+    return;
   }
 
   res.status(200).json({
@@ -28,7 +28,7 @@ exports.getUser = async (req, res, netx) => {
     resp = await User.findOne(id);
   } catch (err) {
     next(err);
-    return
+    return;
   }
 
   res.status(200).json({
@@ -44,44 +44,49 @@ exports.postUser = async (req, res, next) => {
   try {
     resp = await User.create({ email, password }, next);
   } catch (err) {
-    console.log(err)
     next(err);
     return;
   }
 
   res.status(201).json({
     success: true,
+    message: 'Object created successfully.',
     data: resp,
   });
 };
 
-// exports.patchUser = (req, res) => {
-//   const { id } = req.params;
-//   let productUpdated = {};
+exports.patchUser = async (req, res, next) => {
+  const { id } = req.params;
+  let resp;
 
-//   const data = users.map((user) => {
-//     if (user.id == id) {
-//       productUpdated = { ...user, ...req.body };
-//       return productUpdated;
-//     }
-//     return user;
-//   });
+  try {
+    resp = await User.update(id, req.body, next);
+  } catch (err) {
+    next(err);
+    return;
+  }
 
-//   res.status(200).json({
-//     success: true,
-//     count: users.length,
-//     data: productUpdated,
-//   });
-// };
+  res.status(200).json({
+    success: true,
+    message: 'Object updated successfully.',
+    data: req.body,
+  });
+};
 
-// exports.deleteUser = (req, res) => {
-//   const { id } = req.params;
+exports.deleteUser = async (req, res, next) => {
+  const { id } = req.params;
+  let resp;
 
-//   const data = users.filter((user) => user.id != id);
+  try {
+    resp = await User.delete(id, next);
+  } catch (err) {
+    next(err);
+    return;
+  }
 
-//   res.status(200).json({
-//     success: true,
-//     count: data.length,
-//     data: data,
-//   });
-// };
+  res.status(200).json({
+    success: true,
+    message: 'Object deleted successfully.',
+    data: resp,
+  });
+};

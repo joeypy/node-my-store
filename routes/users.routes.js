@@ -1,6 +1,12 @@
 const express = require('express');
 const validatorHandler = require('../middleware/validator.middleware');
-const { getAllUsers, postUser, getUser } = require('../controllers/users');
+const {
+  getAllUsers,
+  postUser,
+  getUser,
+  patchUser,
+  deleteUser,
+} = require('../controllers/users');
 const {
   updateUserSchema,
   getUserSchema,
@@ -17,8 +23,12 @@ router
 
 router
   .route('/:id')
-  .get(getUser)
-//   .patch(patchProduct)
-//   .delete(deleteProduct);
+  .get(validatorHandler(getUserSchema, 'params'), getUser)
+  .patch(
+    validatorHandler(getUserSchema, 'params'),
+    validatorHandler(updateUserSchema, 'body'),
+    patchUser
+  )
+  .delete(validatorHandler(getUserSchema, 'params'), deleteUser);
 
 module.exports = router;
