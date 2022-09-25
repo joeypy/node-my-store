@@ -2,6 +2,7 @@ const express = require('express');
 const dotenv = require('dotenv')
 const cors = require('cors');
 const products = require('./routes/products.routes');
+const users = require('./routes/users.routes');
 const errorHandler = require('./middleware/error.middleware');
 
 const app = express();
@@ -32,6 +33,7 @@ app.use(express.urlencoded({ extended: true })); // for parsing application/x-ww
 // ----------------------------------- ROUTES ---------------------------------------- //
 // Mount routers
 app.use('/api/v1/products', products);
+app.use('/api/v1/users', users);
 
 // ---------------------------------- MIDDLEWARE ERROR ------------------------------------ //
 // Handle error routes middleware
