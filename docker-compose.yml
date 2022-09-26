@@ -12,6 +12,7 @@ services:
       - ${DB_PORT}:${DB_PORT}
     volumes:
       - ./postgres_data:/var/lib/postgresql/data
+      
   pgadmin:
     container_name: pgadmin
     image: dpage/pgadmin4

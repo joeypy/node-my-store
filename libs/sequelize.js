@@ -1,6 +1,6 @@
 const { Sequelize } = require('sequelize');
 const config = require('./../config/config');
-const setupModels = require('./../db');
+const setupModels = require('./../config');
 
 const USER = encodeURIComponent(config.dbUser);
 const PASSWORD = encodeURIComponent(config.dbPassword);
@@ -11,6 +11,9 @@ const sequelize = new Sequelize(URI, {
 });
 
 setupModels(sequelize);
-sequelize.sync();
+
+// Only use this in development mode, otherwise it's gone to
+// overwrite the database every time that execute .sync() method
+// sequelize.sync();
 
 module.exports = sequelize;
