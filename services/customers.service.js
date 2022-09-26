@@ -1,17 +1,17 @@
 const { models } = require('../libs/sequelize');
 
-class Category {
+class Customer {
   static findAll = async () => {
-    return await models.Category.findAll();
+    return await models.Customer.findAll();
   };
 
   static create = async (data) => {
-    return await models.Category.create(data);
+    return await models.Customer.create(data);
   };
 
   static findOne = async (id, next) => {
     try {
-      return await models.Category.findByPk(id);
+      return await models.Customer.findByPk(id);
     } catch (err) {
       return next(err);
     }
@@ -19,7 +19,7 @@ class Category {
 
   static update = async (id, data, next) => {
     try {
-      return await models.Category.update(data, { where: { id } });
+      return await models.Customer.update(data, { where: { id } });
     } catch (err) {
       return next(err);
     }
@@ -27,7 +27,7 @@ class Category {
 
   static delete = async (id, next) => {
     try {
-      await models.Category.destroy({ where: { id } });
+      await models.Customer.destroy({ where: { id } });
       return id;
     } catch (err) {
       return next(err);
@@ -35,4 +35,4 @@ class Category {
   };
 }
 
-module.exports = Category;
+module.exports = Customer;
